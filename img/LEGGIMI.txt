@@ -1,0 +1,20 @@
+Immagini da caricare in questa cartella (img/)
+================================================
+
+categoria-sneakers.jpg   -> 900x900 px  (sezione "Categorie", card Sneakers)
+categoria-pokemon.jpg    -> 900x900 px  (sezione "Categorie", card Carte Pokémon)
+categoria-gaming.jpg     -> 900x900 px  (sezione "Categorie", card Console & Giochi)
+categoria-oggetti.jpg    -> 900x900 px  (sezione "Categorie", card Oggettistica)
+
+og-image.jpg             -> 1200x630 px (immagine di anteprima social/WhatsApp,
+                                          referenziata nei tag og:image e twitter:image
+                                          di tutte le pagine — va messa nella root del
+                                          sito, non qui, come https://selezione.store/og-image.jpg)
+
+logo.png                 -> referenziato nel JSON-LD (Organization.logo) come
+                                          https://selezione.store/logo.png — va messo
+                                          nella root del sito.
+
+Finché questi file non vengono caricati, il sito mostra automaticamente un
+placeholder grafico (icona + etichetta) grazie agli attributi onerror sulle
+immagini di categoria: nessun'immagine rotta sarà visibile.

@@ -1,33 +1,53 @@
-Immagini da caricare in questa cartella (img/)
-================================================
+Immagini del sito (cartella img/)
+==================================
 
-IMPORTANTE — servono DUE file per ogni categoria: .webp e .jpg
---------------------------------------------------------------
-Le card categoria usano <picture>: il browser carica il .webp se lo
-supporta, altrimenti ricade sul .jpg. Se carichi solo il .jpg il sito
-funziona lo stesso, ma se carichi solo il .webp la foto NON si vede
-sui browser che non lo supportano. Carica sempre entrambi.
+CARD CATEGORIA — GIÀ CARICATE
+------------------------------
+Le quattro card della sezione "Categorie" sono in produzione dal 2026-07-26.
+Sono grafiche piatte 900x900 con il nome della categoria in tipografia, la
+numerazione 01/04…04/04 e il marchio "SELEZIONE.". Palette coordinata col
+design system: bianco, nero, cobalto #2E5BFF, bianco sporco.
 
-categoria-sneakers.webp + categoria-sneakers.jpg  -> 900x900 px  (card Sneakers)
-categoria-pokemon.webp  + categoria-pokemon.jpg   -> 900x900 px  (card Pokémon)
-categoria-gaming.webp   + categoria-gaming.jpg    -> 900x900 px  (card Console & Giochi)
-categoria-oggetti.webp  + categoria-oggetti.jpg   -> 900x900 px  (card Oggettistica)
+  categoria-sneakers.webp / .png   card 01 — Sneakers   (bianca)
+  categoria-pokemon.webp  / .png   card 02 — Pokémon    (nera)
+  categoria-gaming.webp   / .png   card 03 — Gaming     (cobalto)
+  categoria-oggetti.webp  / .png   card 04 — Oggetti    (bianco sporco)
 
-Peso: obiettivo sotto i 150 KB per file. A 900x900 px un WebP di qualità
-80 sta di norma fra i 40 e gli 80 KB. Per convertire senza installare
-niente: squoosh.app (trascina il JPG, scegli WebP, qualità ~80, scarica).
+Il markup usa <picture>: il browser prende il .webp se lo supporta, altrimenti
+ricade sul .png. Servono quindi SEMPRE entrambi i file per ogni card.
 
-og-image.jpg             -> 1200x630 px (immagine di anteprima social/WhatsApp,
-                                          referenziata nei tag og:image e twitter:image
-                                          di tutte le pagine — va messa nella root del
-                                          sito, non qui, come https://selezioneshop.it/og-image.jpg)
-                                          Tenerla in JPG: WhatsApp e alcuni crawler
-                                          social non leggono ancora il WebP.
+Perché PNG e non JPG: sono grafiche a colori piatti con testo netto. Il JPG
+produrrebbe aloni attorno alle lettere; il PNG no. Il WebP è generato in
+modalità lossless, quindi il testo resta identico all'originale.
 
-Nota: l'immagine hero della home e quella di "Chi siamo" al momento NON
-sono <img> ma riquadri segnaposto in CSS. Se vuoi metterci una foto reale
-va aggiunto il markup: chiedi prima di caricare i file.
+Peso attuale (limite: 150 KB per file):
+  webp  6-11 KB      png  18-27 KB
 
-Finché questi file non vengono caricati, il sito mostra automaticamente un
-placeholder grafico (icona + etichetta) grazie agli attributi onerror sulle
-immagini di categoria: nessun'immagine rotta sarà visibile.
+SE DEVI RIFARE O SOSTITUIRE UNA CARD
+-------------------------------------
+Consegna il file sorgente a 900x900 px (o più grande, quadrato) in PNG, e
+rigenera la coppia .webp + .png mantenendo esattamente i nomi qui sopra.
+Per convertire senza installare niente: squoosh.app, opzione WebP con la
+spunta "lossless" attiva.
+
+Gli attributi alt di queste quattro immagini sono volutamente vuoti
+(alt=""): il nome della categoria compare già come testo reale nell'<h3>
+subito sotto la card, quindi ripeterlo nell'alt farebbe solo doppione per
+chi usa uno screen reader.
+
+
+ANCORA DA CARICARE
+-------------------
+og-image.jpg   -> 1200x630 px, da mettere nella ROOT del sito (non qui),
+                  come https://selezioneshop.it/og-image.jpg
+                  È l'anteprima che compare quando il link viene condiviso su
+                  WhatsApp, Facebook, Instagram, X. Al momento i tag og:image e
+                  twitter:image di 6 pagine puntano a questo file, che non
+                  esiste: le anteprime escono senza immagine.
+                  Tenerla in JPG: WhatsApp e alcuni crawler social non leggono
+                  ancora il WebP.
+
+Nota: l'immagine grande della home (hero) e quella di "Chi sono" NON sono
+<img> ma riquadri segnaposto in CSS. Per metterci una foto vera va aggiunto
+il markup: quella della home diventerebbe l'elemento LCP e andrebbe caricata
+con loading="eager".

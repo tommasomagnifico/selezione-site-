@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://selezione.store/sitemap.xml
+Sitemap: https://selezioneshop.it/sitemap.xml

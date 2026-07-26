@@ -9,10 +9,10 @@ categoria-oggetti.jpg    -> 900x900 px  (sezione "Categorie", card Oggettistica)
 og-image.jpg             -> 1200x630 px (immagine di anteprima social/WhatsApp,
                                           referenziata nei tag og:image e twitter:image
                                           di tutte le pagine — va messa nella root del
-                                          sito, non qui, come https://selezione.store/og-image.jpg)
+                                          sito, non qui, come https://selezioneshop.it/og-image.jpg)
 
 logo.png                 -> referenziato nel JSON-LD (Organization.logo) come
-                                          https://selezione.store/logo.png — va messo
+                                          https://selezioneshop.it/logo.png — va messo
                                           nella root del sito.
 
 Finché questi file non vengono caricati, il sito mostra automaticamente un

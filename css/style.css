@@ -549,7 +549,6 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .legal-body a { color: var(--cobalt); text-decoration: none; }
 .legal-body a:hover { text-decoration: underline; }
 .legal-updated { padding: 3rem 6%; font-size: 0.78rem; color: var(--muted); }
-.legal-note { font-size: 0.72rem; color: var(--muted); }
 
 /* Link contestuali dentro il corpo del testo */
 .cta-band p a, .channels-note a, .about-content > p a, .faq-answer a {

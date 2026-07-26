@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# CSS, JS e immagini devono restare scansionabili: Google li usa
+# per renderizzare la pagina e valutarne l'usabilità mobile.
+Allow: /css/
+Allow: /js/
+Allow: /img/
+
 Sitemap: https://selezioneshop.it/sitemap.xml

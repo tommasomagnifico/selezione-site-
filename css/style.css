@@ -12,7 +12,9 @@
   --anthracite: #2C2C2C;
   --offwhite: #F9F9F9;
   --cobalt: #2E5BFF;
-  --muted: #555;
+  /* Grigi testo: entrambi sopra il 4.5:1 su nero (WCAG 2.1 AA).
+     --muted era #555 (2.8:1) e non era conforme. */
+  --muted: #767676;
   --muted2: #777;
   --border: #1e1e1e;
   --img-bg: #111;
@@ -27,7 +29,8 @@ body {
 }
 
 a:focus-visible, button:focus-visible, input:focus-visible,
-select:focus-visible, textarea:focus-visible, label:focus-visible {
+select:focus-visible, textarea:focus-visible, label:focus-visible,
+summary:focus-visible, [tabindex]:focus-visible {
   outline: 2px solid var(--cobalt); outline-offset: 3px;
 }
 
@@ -90,9 +93,12 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
   background: var(--black2); border-left: 1px solid var(--border);
   display: flex; flex-direction: column; justify-content: center; gap: 0.5rem;
   padding: 2rem 2.5rem;
-  transform: translateX(100%); transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  transform: translateX(100%);
+  /* visibility: hidden toglie i link dall'ordine di tabulazione quando il menu è chiuso */
+  visibility: hidden;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), visibility 0.35s;
 }
-.mobile-menu.open { transform: translateX(0); }
+.mobile-menu.open { transform: translateX(0); visibility: visible; }
 .mobile-menu a {
   text-decoration: none; color: var(--muted2);
   font-family: 'DM Serif Display', serif; font-size: 1.5rem;
@@ -211,6 +217,38 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 /* Variante per frasi brevi che devono stare su una riga sola */
 .page-hero p.lead-wide { max-width: 760px; }
 
+/* PROVA SOCIALE eBAY */
+.ebay-proof { padding: 0 6%; background: var(--black2); border-top: 1px solid var(--border); }
+.ebay-proof-inner, .ebay-proof-inline {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 2.5rem;
+  text-decoration: none; color: var(--offwhite);
+  padding: 1.6rem 0; transition: color 0.2s;
+}
+.ebay-proof-inline {
+  padding: 1.2rem 1.4rem; margin-bottom: 1.8rem; gap: 1.8rem;
+  background: var(--black2); border: 1px solid var(--border);
+}
+.ebay-proof-stat { display: flex; flex-direction: column; gap: 0.25rem; }
+.ebay-proof-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; color: var(--offwhite); line-height: 1;
+}
+.ebay-proof-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-weight: 500;
+}
+.ebay-proof-cta {
+  margin-left: auto;
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--border); padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ebay-proof-inner:hover .ebay-proof-cta, .ebay-proof-inline:hover .ebay-proof-cta { color: var(--cobalt); border-color: var(--cobalt); }
+@media(max-width: 560px) {
+  .ebay-proof-inner, .ebay-proof-inline { gap: 1.2rem; }
+  .ebay-proof-cta { margin-left: 0; width: 100%; }
+}
+
 /* DIVIDER (marquee) */
 .divider {
   border-top: 1px solid var(--border);
@@ -289,6 +327,8 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .cat-card:nth-child(4) { transition-delay: 0.24s; }
 .cat-card:hover { background: var(--black3); }
 .cat-tile { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--img-bg); }
+/* <picture> è inline: senza questo l'immagine perde height:100% */
+.cat-tile picture { display: block; width: 100%; height: 100%; }
 .cat-photo { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .cat-card:hover .cat-photo { transform: scale(1.04); }
 .cat-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: #333; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
@@ -346,8 +386,12 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
   transition: color 0.2s, border-color 0.2s, gap 0.2s;
 }
 .channel-card:hover .ch-arrow { color: var(--cobalt); border-color: var(--cobalt); gap: 0.8rem; }
+.channels-note {
+  font-size: 0.85rem; color: var(--muted2); line-height: 1.8;
+  font-weight: 300; max-width: 620px; margin-top: 2.5rem;
+}
 
-/* VENDI A NOI */
+/* VENDI CONSOLE */
 .sell { padding: 6rem 6%; background: var(--black2); border-top: 1px solid var(--border); }
 .sell-inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; max-width: 1200px; margin: 0 auto; }
 .sell-left { display: flex; flex-direction: column; justify-content: center; }
@@ -381,6 +425,17 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .sell-note a { color: var(--cobalt); text-decoration: none; }
 .sell-note a:hover { text-decoration: underline; }
 
+/* LOGISTICA (vendi.html) */
+.sell-logistics { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.sell-logistics h2 {
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem); line-height: 1.2; margin-bottom: 1rem;
+}
+.sell-logistics p {
+  font-size: 0.85rem; color: var(--muted2); line-height: 1.8;
+  font-weight: 300; max-width: 440px; margin-bottom: 0.9rem;
+}
+.sell-logistics p:last-child { margin-bottom: 0; }
+
 .sell-form { background: var(--black); border: 1px solid var(--border); padding: 2.5rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
 .field { display: flex; flex-direction: column; }
@@ -395,7 +450,7 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
   font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
   border-radius: 2px; transition: border-color 0.2s; width: 100%;
 }
-.field input::placeholder, .field textarea::placeholder { color: #444; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--cobalt); }
 .field select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23777' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.2rem; }
 .field select option { background: var(--black2); }
@@ -494,6 +549,15 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .legal-body a { color: var(--cobalt); text-decoration: none; }
 .legal-body a:hover { text-decoration: underline; }
 .legal-updated { padding: 3rem 6%; font-size: 0.78rem; color: var(--muted); }
+.legal-note { font-size: 0.72rem; color: var(--muted); }
+
+/* Link contestuali dentro il corpo del testo */
+.cta-band p a, .channels-note a, .about-content > p a, .faq-answer a {
+  color: var(--cobalt); text-decoration: none;
+}
+.cta-band p a:hover, .channels-note a:hover, .about-content > p a:hover, .faq-answer a:hover {
+  text-decoration: underline;
+}
 
 /* CONTATTI */
 .contact-cards {

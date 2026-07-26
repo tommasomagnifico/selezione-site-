@@ -1,0 +1,8 @@
+# Redirect 301 permanente da /index.html alla root.
+#
+# NOTA: il sito è pubblicato su GitHub Pages, che IGNORA questo file
+# (non supporta redirect server-side). È pronto per una migrazione a
+# Netlify, dove viene letto automaticamente. Su GitHub Pages il caso
+# è coperto dal canonical di index.html + dal fallback in js/main.js.
+
+/index.html    /    301!

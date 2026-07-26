@@ -1,4 +1,14 @@
 (function () {
+  /* --- /index.html -> / ---
+     GitHub Pages non permette redirect 301 server-side: questo è il ripiego
+     lato client. Il canonical di index.html punta già alla root, quindi per
+     Google l'URL valido resta uno solo. Se il sito passerà a Netlify/Vercel/
+     Apache, il file _redirects nella root contiene la regola 301 vera. */
+  if (window.location.pathname === '/index.html') {
+    window.location.replace('/' + window.location.search + window.location.hash);
+    return;
+  }
+
   /* --- MENU MOBILE --- */
   var navToggle = document.getElementById('navToggle');
   var mobileMenu = document.getElementById('mobileMenu');

@@ -1,19 +1,32 @@
 Immagini da caricare in questa cartella (img/)
 ================================================
 
-categoria-sneakers.jpg   -> 900x900 px  (sezione "Categorie", card Sneakers)
-categoria-pokemon.jpg    -> 900x900 px  (sezione "Categorie", card Carte Pokémon)
-categoria-gaming.jpg     -> 900x900 px  (sezione "Categorie", card Console & Giochi)
-categoria-oggetti.jpg    -> 900x900 px  (sezione "Categorie", card Oggettistica)
+IMPORTANTE — servono DUE file per ogni categoria: .webp e .jpg
+--------------------------------------------------------------
+Le card categoria usano <picture>: il browser carica il .webp se lo
+supporta, altrimenti ricade sul .jpg. Se carichi solo il .jpg il sito
+funziona lo stesso, ma se carichi solo il .webp la foto NON si vede
+sui browser che non lo supportano. Carica sempre entrambi.
+
+categoria-sneakers.webp + categoria-sneakers.jpg  -> 900x900 px  (card Sneakers)
+categoria-pokemon.webp  + categoria-pokemon.jpg   -> 900x900 px  (card Pokémon)
+categoria-gaming.webp   + categoria-gaming.jpg    -> 900x900 px  (card Console & Giochi)
+categoria-oggetti.webp  + categoria-oggetti.jpg   -> 900x900 px  (card Oggettistica)
+
+Peso: obiettivo sotto i 150 KB per file. A 900x900 px un WebP di qualità
+80 sta di norma fra i 40 e gli 80 KB. Per convertire senza installare
+niente: squoosh.app (trascina il JPG, scegli WebP, qualità ~80, scarica).
 
 og-image.jpg             -> 1200x630 px (immagine di anteprima social/WhatsApp,
                                           referenziata nei tag og:image e twitter:image
                                           di tutte le pagine — va messa nella root del
                                           sito, non qui, come https://selezioneshop.it/og-image.jpg)
+                                          Tenerla in JPG: WhatsApp e alcuni crawler
+                                          social non leggono ancora il WebP.
 
-logo.png                 -> referenziato nel JSON-LD (Organization.logo) come
-                                          https://selezioneshop.it/logo.png — va messo
-                                          nella root del sito.
+Nota: l'immagine hero della home e quella di "Chi siamo" al momento NON
+sono <img> ma riquadri segnaposto in CSS. Se vuoi metterci una foto reale
+va aggiunto il markup: chiedi prima di caricare i file.
 
 Finché questi file non vengono caricati, il sito mostra automaticamente un
 placeholder grafico (icona + etichetta) grazie agli attributi onerror sulle

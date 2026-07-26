@@ -331,7 +331,10 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .cat-tile picture { display: block; width: 100%; height: 100%; }
 .cat-photo { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .cat-card:hover .cat-photo { transform: scale(1.04); }
-.cat-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: #333; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
+/* Segnaposto mostrato solo se l'immagine non carica: l'onerror sull'<img>
+   rimette display:flex inline. Di default resta nascosto, altrimenti si
+   sovrappone alla foto (position:absolute + inset:0). */
+.cat-empty { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; color: #333; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .cat-empty svg { opacity: 0.6; }
 .cat-info { padding: 1.4rem 1.2rem; }
 .cat-tag {

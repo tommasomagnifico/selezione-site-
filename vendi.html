@@ -184,20 +184,50 @@
       </a>
 
       <div id="sellFormFields">
+        <h2 class="sr-only">Come inviare la richiesta</h2>
+        <div class="sell-steps form-steps">
+          <div class="sell-step">
+            <span class="sell-step-num">01</span>
+            <div>
+              <h3>Compili il modulo qui sotto</h3>
+              <p>Ci vogliono 30 secondi.</p>
+            </div>
+          </div>
+          <div class="sell-step">
+            <span class="sell-step-num">02</span>
+            <div>
+              <h3>Si apre WhatsApp con il messaggio già pronto</h3>
+              <p>Premi invia e mandami le foto.</p>
+            </div>
+          </div>
+          <div class="sell-step">
+            <span class="sell-step-num">03</span>
+            <div>
+              <h3>Ti rispondo con una valutazione</h3>
+              <p>Entro 24-48h.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="field">
             <label for="nome">Nome</label>
-            <input type="text" id="nome" placeholder="Il tuo nome">
+            <input type="text" id="nome" placeholder="Il tuo nome" autocomplete="name" aria-required="true">
           </div>
           <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="nome@email.com">
+            <label for="cellulare">Cellulare</label>
+            <input type="tel" id="cellulare" placeholder="330 1234567" autocomplete="tel" aria-required="true">
           </div>
         </div>
         <div class="form-row">
           <div class="field">
+            <label for="email">Email <span class="field-opt">facoltativa</span></label>
+            <input type="email" id="email" placeholder="nome@email.com" autocomplete="email">
+            <p class="field-hint">Se preferisci ricevere la valutazione scritta anche via email.</p>
+          </div>
+          <div class="field">
             <label for="tipo">Tipo di articolo</label>
-            <select id="tipo">
+            <select id="tipo" aria-required="true">
               <option value="">Seleziona…</option>
               <option>Console</option>
               <option>Videogioco</option>
@@ -206,63 +236,44 @@
               <option>Altro</option>
             </select>
           </div>
-          <div class="field">
-            <label for="piattaforma">Piattaforma</label>
-            <select id="piattaforma">
-              <option value="">Seleziona…</option>
-              <option>PlayStation (PS5 / PS4 / PS3…)</option>
-              <option>Nintendo (Switch / Wii / DS…)</option>
-              <option>Xbox (Series / One / 360…)</option>
-              <option>Retro / Vintage</option>
-              <option>PC</option>
-              <option>Altro / Mista</option>
-            </select>
-          </div>
         </div>
         <div class="form-row">
-          <div class="field">
-            <label for="condizione">Condizione</label>
-            <select id="condizione">
-              <option value="">Seleziona…</option>
-              <option>Come nuovo</option>
-              <option>Ottime condizioni</option>
-              <option>Buone condizioni</option>
-              <option>Usurato / da riparare</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="citta">Città (per il ritiro)</label>
-            <input type="text" id="citta" placeholder="Es. Roma">
+          <div class="field full">
+            <label for="dettagli">Descrizione breve</label>
+            <textarea id="dettagli" placeholder="Game Boy Color viola, funzionante, con 4 giochi e scatola originale." aria-required="true"></textarea>
+            <p class="field-hint">Modello, condizioni, cosa è incluso. Esempio: "Game Boy Color viola, funzionante, con 4 giochi e scatola originale."</p>
           </div>
         </div>
         <div class="form-row">
           <div class="field full">
-            <label for="dettagli">Descrizione articoli</label>
-            <textarea id="dettagli" placeholder="Es. PlayStation 2 Slim + 2 controller + 8 giochi (FIFA, GTA…). Tutto funzionante, scatola originale."></textarea>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="field full">
-            <label for="foto">Foto degli articoli</label>
+            <label for="foto">Foto <span class="field-opt">facoltative</span></label>
             <input type="file" id="foto" accept="image/*" multiple>
-            <p class="field-hint">Seleziona una o più foto degli articoli che vuoi vendere.</p>
+            <p class="field-hint">Puoi allegarle qui, oppure mandarmele direttamente su WhatsApp dopo l'invio.</p>
           </div>
         </div>
         <div class="form-check">
           <input type="checkbox" id="privacy">
           <label for="privacy">Ho letto e accetto l'<a href="legale.html#privacy" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei miei dati per gestire la richiesta.</label>
         </div>
-        <button class="form-submit" id="sellSubmitBtn">Invia richiesta →</button>
-        <p class="form-error" id="sellError">Qualcosa è andato storto. Riprova o scrivimi direttamente via email.</p>
-        <p class="form-note">Ti rispondo entro 24-48h. Nessun impegno, valutazione gratuita.</p>
+        <div class="form-check">
+          <input type="checkbox" id="marketing">
+          <label for="marketing">Acconsento a ricevere occasionalmente novità e proposte via email.</label>
+        </div>
+        <button class="form-submit" id="sellSubmitBtn">Continua su WhatsApp</button>
+        <p class="form-error" id="sellError"></p>
+        <p class="form-note">Si apre WhatsApp con il messaggio già pronto: ti basta premere invia e allegare le foto.</p>
+        <p class="form-alt"><a href="mailto:info@selezioneshop.it?subject=Richiesta%20di%20valutazione">Preferisco scrivere via email</a></p>
       </div>
 
       <div class="form-success" id="sellSuccess">
         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/>
         </svg>
-        <h3>Richiesta inviata.</h3>
-        <p>Grazie! Ho ricevuto i tuoi dati e ti rispondo a breve con una valutazione.</p>
+        <h3>Ti ho aperto WhatsApp.</h3>
+        <p class="form-ref-label">Il tuo riferimento</p>
+        <p class="form-ref" id="sellRef"></p>
+        <p>Se non si è aperto, <a href="https://wa.me/393315453138" target="_blank" rel="noopener" id="sellWaLink">scrivimi qui</a> oppure manda una mail a <a href="mailto:info@selezioneshop.it" id="sellMailLink">info@selezioneshop.it</a> indicando il riferimento <strong id="sellRefInline"></strong>.</p>
+        <p>Ricordati di allegare le foto: senza quelle non riesco a fare una valutazione.</p>
       </div>
     </div>
   </div>

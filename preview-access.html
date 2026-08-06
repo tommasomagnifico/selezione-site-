@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- GATE DI ANTEPRIMA — questa pagina fa parte del gate: al go-live si cancella (vedi gate.js).
+     gate.js viene caricato solo per leggere CHIAVE_DI_ACCESSO: qui dentro si autoesclude. -->
+<script src="/gate.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=optional" rel="stylesheet">
+
+<title>Sito in anteprima | Selezione.</title>
+
+<!-- Fuori dai motori di ricerca e, di conseguenza, fuori da sitemap.xml:
+     tools/genera-sitemap.mjs salta le pagine noindex. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+
+<!-- Favicon (il punto del brand) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23000000'/%3E%3Ccircle cx='16' cy='22' r='4' fill='%232E5BFF'/%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- Stile solo di questa pagina, volutamente inline: così il gate sta tutto in
+     due file e al go-live non resta niente da ripulire in css/style.css. -->
+<style>
+  .gate {
+    position: relative; overflow: hidden;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 3rem 1.5rem; text-align: center;
+  }
+  .gate::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(52% 90% at 50% 0%, rgba(46,91,255,0.15), transparent 70%);
+  }
+  .gate-card { position: relative; width: 100%; max-width: 400px; }
+  .gate .logo { display: inline-block; font-size: 1.7rem; margin-bottom: 2.6rem; }
+  .gate h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.9rem, 4vw, 2.4rem); line-height: 1.15; letter-spacing: -0.5px;
+    color: var(--offwhite); margin-bottom: 1rem;
+  }
+  .gate h1 em { font-style: italic; color: var(--cobalt); }
+  .gate-lead {
+    font-size: 0.92rem; color: var(--muted2); font-weight: 300; line-height: 1.8;
+  }
+  .gate form { text-align: left; margin-top: 2.4rem; }
+  .gate .form-submit { margin-top: 1rem; }
+  .gate-note {
+    font-size: 0.72rem; color: var(--muted); line-height: 1.6;
+    margin-top: 2.4rem; padding-top: 1.4rem; border-top: 1px solid var(--border);
+  }
+  .gate-note a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+  .gate-note a:hover { color: var(--offwhite); }
+</style>
+</head>
+<body>
+
+<main class="gate">
+  <div class="gate-card">
+    <span class="logo">selezione<span>.</span></span>
+
+    <div class="label">Accesso riservato</div>
+    <h1>Sito in <em>anteprima.</em></h1>
+    <p class="gate-lead">Questa versione del sito non è ancora pubblica. Inserisci il codice di accesso per continuare.</p>
+
+    <form id="gateForm" novalidate>
+      <div class="field">
+        <label for="gateKey">Codice di accesso</label>
+        <input type="password" id="gateKey" name="gateKey" autocomplete="off" autocapitalize="off" spellcheck="false" required aria-describedby="gateError">
+      </div>
+      <button type="submit" class="form-submit">Entra</button>
+      <p class="form-error" id="gateError" role="alert"></p>
+    </form>
+
+    <p class="gate-note">Se ti serve il codice, scrivi a <a href="mailto:selezioneresellshop@gmail.com">selezioneresellshop@gmail.com</a> o su <a href="https://wa.me/393315453138" target="_blank" rel="noopener">WhatsApp</a>.</p>
+  </div>
+</main>
+
+<script>
+(function () {
+  var form = document.getElementById('gateForm');
+  var campo = document.getElementById('gateKey');
+  var errore = document.getElementById('gateError');
+
+  function mostraErrore(testo) {
+    errore.textContent = testo;
+    errore.classList.add('show');
+  }
+
+  form.addEventListener('submit', function (e) {
+    /* Niente ricaricamento: l'errore compare sul posto. */
+    e.preventDefault();
+    errore.classList.remove('show');
+
+    var inserito = campo.value.trim();
+    if (!inserito) {
+      mostraErrore('Inserisci il codice di accesso.');
+      campo.focus();
+      return;
+    }
+
+    /* CHIAVE_DI_ACCESSO arriva da gate.js: il codice è definito una volta sola. */
+    if (inserito.toUpperCase() !== CHIAVE_DI_ACCESSO.toUpperCase()) {
+      mostraErrore('Codice non valido. Controlla e riprova.');
+      campo.select();
+      return;
+    }
+
+    try {
+      window.localStorage.setItem('slz_preview_access', CHIAVE_DI_ACCESSO);
+    } catch (err) {
+      mostraErrore('Il browser sta bloccando la memoria locale. Disattiva la navigazione privata e riprova.');
+      return;
+    }
+
+    window.location.replace('/');
+  });
+})();
+</script>
+</body>
+</html>

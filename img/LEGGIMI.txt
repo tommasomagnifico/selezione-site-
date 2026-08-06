@@ -36,16 +36,46 @@ subito sotto la card, quindi ripeterlo nell'alt farebbe solo doppione per
 chi usa uno screen reader.
 
 
+COPERTINE DEL BLOG (img/blog/) — GIÀ CARICATE
+----------------------------------------------
+Ogni articolo ha la sua copertina 1200x630, con lo stesso impianto delle card
+categoria: numerazione, parola-chiave in tipografia grande, marchio
+"SELEZIONE." in basso e palette del design system.
+
+  come-vendere-console-usate.svg   01 — Vendere        (fondo cobalto)
+  guida-carte-pokemon-sealed.svg   02 — Collezionismo  (fondo nero)
+  quanto-vale-la-tua-ps4.svg       03 — Valutazioni    (fondo bianco sporco)
+
+Perché SVG e non WebP: sono grafiche vettoriali a colori piatti, quindi l'SVG
+pesa 1-2 KB (contro i 6-11 KB dei WebP delle card) e resta nitido a qualsiasi
+risoluzione, retina compresi. Non serve un secondo formato di fallback:
+l'SVG in un <img> è supportato da tutti i browser in circolazione. Anche Google
+accetta l'SVG come immagine dei dati strutturati, quindi il campo "image" del
+JSON-LD Article punta direttamente a questi file.
+
+Se un domani le copertine diventano fotografie, vanno servite in WebP + JPG
+dentro un <picture>, esattamente come le card categoria.
+
+Il file .svg va aperto con un editor di testo: sono poche righe, si cambiano
+colori e parole senza software di grafica.
+
+
 ANCORA DA CARICARE
 -------------------
 og-image.jpg   -> 1200x630 px, da mettere nella ROOT del sito (non qui),
                   come https://selezioneshop.it/og-image.jpg
                   È l'anteprima che compare quando il link viene condiviso su
                   WhatsApp, Facebook, Instagram, X. Al momento i tag og:image e
-                  twitter:image di 6 pagine puntano a questo file, che non
-                  esiste: le anteprime escono senza immagine.
+                  twitter:image di TUTTE le pagine (blog e articoli compresi)
+                  puntano a questo file, che non esiste: le anteprime escono
+                  senza immagine.
                   Tenerla in JPG: WhatsApp e alcuni crawler social non leggono
-                  ancora il WebP.
+                  ancora il WebP — e nessuno di loro renderizza l'SVG, per
+                  questo le copertine degli articoli non sono usate come
+                  og:image.
+                  Miglioria successiva: dare a ogni articolo la sua anteprima
+                  social, cioè un JPG 1200x630 in img/blog/<slug>-og.jpg da
+                  richiamare in og:image e twitter:image di quell'articolo.
 
 Nota: l'immagine grande della home (hero) e quella di "Chi sono" NON sono
 <img> ma riquadri segnaposto in CSS. Per metterci una foto vera va aggiunto

@@ -610,6 +610,152 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 }
 .contact-card-value { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--offwhite); word-break: break-word; }
 
+/* ==========================================================================
+   BLOG — indice (/blog/) e pagina articolo (/blog/<slug>/)
+   Riusa palette, font e trame dei componenti esistenti: la griglia degli
+   articoli è la stessa .cat-grid (celle separate da 1px di --border), i
+   meta usano Barlow Condensed come .cat-tag / .ch-label.
+   ========================================================================== */
+
+/* Filtri per categoria (progressive enhancement: senza JS restano tutti visibili) */
+.blog { padding: 6rem 6%; border-top: 1px solid var(--border); }
+.blog-filters {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-bottom: 3rem;
+}
+/* Serve esplicitamente: il display:flex qui sopra batterebbe il display:none
+   che il browser applica da solo all'attributo hidden. */
+.blog-filters[hidden] { display: none; }
+.blog-filter {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 2px;
+  padding: 0.5rem 1.1rem; cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.blog-filter:hover { color: var(--offwhite); border-color: var(--muted); }
+.blog-filter[aria-pressed="true"] { color: var(--offwhite); border-color: var(--cobalt); background: rgba(46,91,255,0.12); }
+
+.blog-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+}
+.post-card {
+  background: var(--black2); text-decoration: none; color: var(--offwhite);
+  display: flex; flex-direction: column; transition: background 0.25s;
+}
+.post-card:hover { background: var(--black3); }
+.post-tile { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--img-bg); }
+.post-cover { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.post-card:hover .post-cover { transform: scale(1.04); }
+.post-info { padding: 1.6rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
+.post-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.71rem; letter-spacing: 0.15em; text-transform: uppercase;
+  font-weight: 600; color: var(--cobalt); margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+}
+.post-meta time { color: var(--muted); font-weight: 500; letter-spacing: 0.1em; }
+.post-meta .post-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+/* Il titolo della card è un h2 nell'indice (sta sotto l'h1 della pagina) e un
+   h3 tra i correlati (sta sotto l'h2 "Continua a leggere"): stesso aspetto. */
+.post-card h2, .post-card h3 {
+  font-family: 'DM Serif Display', serif; font-size: 1.25rem; line-height: 1.25;
+  letter-spacing: -0.3px; color: var(--offwhite); margin-bottom: 0.6rem;
+}
+.post-excerpt { font-size: 0.82rem; color: var(--muted2); line-height: 1.7; font-weight: 300; margin-bottom: 1.4rem; }
+.post-more {
+  margin-top: auto;
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--border); padding-bottom: 2px; width: fit-content;
+  transition: color 0.2s, border-color 0.2s;
+}
+.post-card:hover .post-more { color: var(--cobalt); border-color: var(--cobalt); }
+
+/* "Carica altri": nascosto finché il JS non lo attiva, così senza JS non
+   compare un bottone che non farebbe nulla. */
+.blog-loadmore { display: none; margin-top: 2.5rem; text-align: center; }
+.blog-loadmore.show { display: block; }
+.blog-empty { display: none; margin-top: 2.5rem; font-size: 0.88rem; color: var(--muted2); font-weight: 300; }
+.blog-empty.show { display: block; }
+
+/* Briciole di pane */
+.breadcrumb { padding: 8.5rem 6% 0; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.breadcrumb li {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 600; color: var(--muted);
+}
+.breadcrumb li + li::before { content: '/'; margin-right: 0.6rem; color: var(--border); }
+.breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--offwhite); }
+.breadcrumb [aria-current="page"] { color: var(--offwhite); }
+
+/* Testata dell'articolo */
+.article-hero { padding: 2.5rem 6% 3rem; }
+.article-hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem); line-height: 1.1; letter-spacing: -1px;
+  color: var(--offwhite); margin-bottom: 1.2rem; max-width: 900px; text-wrap: balance;
+}
+.article-hero h1 em { font-style: italic; color: var(--cobalt); }
+.article-standfirst { font-size: 1rem; color: var(--muted2); font-weight: 300; line-height: 1.8; max-width: 720px; }
+.article-byline {
+  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+  margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--border);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+  color: var(--muted); max-width: 720px;
+}
+.article-byline .author { color: var(--offwhite); font-weight: 600; }
+.article-byline .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+
+.article-cover { padding: 0 6%; }
+.article-cover img {
+  display: block; width: 100%; height: auto; max-height: 460px; object-fit: cover;
+  background: var(--img-bg); border: 1px solid var(--border);
+}
+.article-cover figcaption { font-size: 0.72rem; color: var(--muted); margin-top: 0.7rem; line-height: 1.6; }
+
+/* Corpo dell'articolo */
+.article-body { padding: 4rem 6% 5rem; max-width: 860px; }
+.article-body h2 {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.2; letter-spacing: -0.4px; color: var(--offwhite);
+  margin: 3rem 0 1.1rem;
+}
+.article-body h2:first-child { margin-top: 0; }
+.article-body h2 em { font-style: italic; color: var(--cobalt); }
+.article-body h3 {
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+  letter-spacing: 0.01em; color: var(--offwhite); margin: 2rem 0 0.7rem;
+}
+.article-body p { font-size: 0.92rem; color: var(--muted2); line-height: 1.9; font-weight: 300; margin-bottom: 1.1rem; }
+.article-body ul, .article-body ol { margin: 0 0 1.4rem 1.1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.article-body li { font-size: 0.92rem; color: var(--muted2); line-height: 1.8; font-weight: 300; padding-left: 0.3rem; }
+.article-body li::marker { color: var(--cobalt); }
+.article-body strong { color: var(--offwhite); font-weight: 500; }
+.article-body a { color: var(--cobalt); text-decoration: none; }
+.article-body a:hover { text-decoration: underline; }
+.article-body blockquote {
+  border-left: 2px solid var(--cobalt); padding: 0.2rem 0 0.2rem 1.4rem;
+  margin: 2rem 0; font-family: 'DM Serif Display', serif; font-style: italic;
+  font-size: 1.1rem; line-height: 1.6; color: var(--offwhite);
+}
+.article-body blockquote p { font-family: inherit; font-size: inherit; color: inherit; line-height: inherit; margin: 0; }
+
+/* Articoli correlati */
+.related { padding: 5rem 6%; border-top: 1px solid var(--border); background: var(--black2); }
+.related > h2 {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  letter-spacing: -0.5px; color: var(--offwhite); margin-bottom: 2.5rem;
+}
+.related .blog-grid { grid-template-columns: repeat(2, 1fr); }
+.related .post-card { background: var(--black); }
+.related .post-card:hover { background: var(--black3); }
+
 /* ERROR PAGE (404) */
 .error-page {
   min-height: 100vh; display: flex; flex-direction: column;
@@ -712,13 +858,16 @@ footer { border-top: 1px solid var(--border); padding: 3.5rem 6% 2.5rem; }
   .cat-grid { grid-template-columns: 1fr 1fr; }
   .channels-grid { grid-template-columns: 1fr; }
   .sell-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-contacts { align-items: flex-start; }
 }
 @media(max-width: 700px) {
   .contact-cards { grid-template-columns: 1fr; }
+  .related .blog-grid { grid-template-columns: 1fr; }
 }
 @media(max-width: 560px) {
   .cat-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
   .channel-card { grid-template-columns: 1fr; }
   .channel-img { aspect-ratio: 16/7; }
   .form-row { grid-template-columns: 1fr; }

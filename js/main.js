@@ -72,7 +72,18 @@
     if (e.key === 'Escape') { toggleMenu(false); }
   });
 
-  /* --- COOKIE BANNER (con persistenza) --- */
+  /* --- COOKIE BANNER (con persistenza) ---
+     La scelta è secca, accetta o rifiuta, e vale per l'unica categoria non
+     necessaria che il sito usa: le statistiche (Google Analytics 4).
+     "Accetta" -> analytics_storage granted. "Rifiuta" -> non si tocca niente,
+     perché il tag nell'head parte già con tutti i consensi negati. */
+  function aggiornaConsenso(concesso) {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('consent', 'update', {
+      'analytics_storage': concesso ? 'granted' : 'denied'
+    });
+  }
+
   var cookieBanner = document.getElementById('cookieBanner');
   if (cookieBanner) {
     if (localStorage.getItem('cookieConsent')) {
@@ -82,11 +93,46 @@
     function setCookie(accepted) {
       localStorage.setItem('cookieConsent', accepted ? 'all' : 'necessary');
       cookieBanner.style.display = 'none';
+      if (accepted) aggiornaConsenso(true);
     }
 
     var acceptBtn = cookieBanner.querySelector('.cookie-btn.solid');
     var rejectBtn = cookieBanner.querySelector('.cookie-btn.ghost');
     if (acceptBtn) acceptBtn.addEventListener('click', function () { setCookie(true); });
     if (rejectBtn) rejectBtn.addEventListener('click', function () { setCookie(false); });
+  }
+
+  /* --- REVOCA DEL CONSENSO ---
+     Il comando viene inserito da qui e non scritto nell'HTML di ogni pagina:
+     revocare richiede JavaScript, quindi un comando che compare solo se il
+     JavaScript c'è è coerente, e non può disallinearsi tra le 12 pagine.
+     Compare accanto ai link legali in fondo, ed è raggiungibile da tastiera
+     perché è un <button> vero. */
+  var rigaLegale = document.querySelector('.footer-bottom p');
+  if (rigaLegale && !document.getElementById('revocaCookie')) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'revocaCookie';
+    btn.className = 'footer-link-btn';
+    btn.textContent = 'Gestisci cookie';
+    rigaLegale.appendChild(document.createTextNode(' · '));
+    rigaLegale.appendChild(btn);
+
+    btn.addEventListener('click', function () {
+      localStorage.removeItem('cookieConsent');
+      aggiornaConsenso(false);
+
+      /* Il Consent Mode impedisce di scriverne di nuovi, ma quelli già sul
+         dispositivo vanno tolti: altrimenti l'identificativo resta lì. */
+      var dominio = location.hostname.replace(/^www\./, '');
+      ['_ga', '_ga_TSMYGTDLV7', '_gid'].forEach(function (nome) {
+        document.cookie = nome + '=; Max-Age=0; path=/';
+        document.cookie = nome + '=; Max-Age=0; path=/; domain=.' + dominio;
+      });
+
+      if (cookieBanner) cookieBanner.style.display = '';
+      btn.textContent = 'Consenso revocato';
+      setTimeout(function () { btn.textContent = 'Gestisci cookie'; }, 4000);
+    });
   }
 })();

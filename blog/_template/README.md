@@ -75,7 +75,15 @@ Un articolo nuovo deve avere **almeno 4 link interni**:
 
 1. uno a `/vendi.html` con anchor descrittiva — mai "clicca qui";
 2. due ad articoli fratelli (le card "Continua a leggere");
-3. uno nella CTA finale, con l'UTM.
+3. uno nella CTA finale.
+
+**Sui link interni non vanno messi parametri `utm_`.** Su GA4 un UTM in un link
+interno chiude la sessione in corso e ne apre una nuova, sovrascrivendo la
+sorgente di traffico: chi arriva da Google e clicca la CTA verrebbe attribuito
+al blog, e perderesti il dato che serve davvero. I click sulla CTA sono già
+tracciati dall'evento `cta_valutazione` in `js/analytics.js`, che registra da
+quale articolo e da quale posizione arriva il click. Gli UTM restano validi solo
+sui link **in ingresso** da fuori: email, social, campagne.
 
 E deve **ricevere** almeno un link: aggiungi una card verso di lui negli
 articoli già pubblicati che trattano temi vicini. Se non lo fai resta
@@ -140,6 +148,25 @@ nell'HTML in questa forma esatta:
 `node find-retrofit.js` li elenca tutti con file e riga, così ogni settimana sai
 quali link ti mancano. Vanno tolti man mano che li risolvi: sono promemoria di
 lavoro, non devono restare nel sorgente pubblicato a tempo indeterminato.
+
+---
+
+## Google Analytics 4
+
+Il template contiene già, in cima all'`<head>`, il blocco **Consent Mode v2**
+seguito dal tag `gtag.js` con l'ID `G-TSMYGTDLV7`. Duplicando il template ogni
+nuovo articolo lo eredita: **non aggiungere un secondo tag** e non spostare il
+blocco. L'ordine è vincolante — il consenso deve essere dichiarato *prima* che
+`gtag.js` venga caricato, altrimenti il tag scrive i cookie prima che l'utente
+abbia accettato.
+
+Tutti i consensi partono negati. Diventano `granted` solo quando il visitatore
+preme "Accetta" sul banner. La logica degli eventi sta in `js/analytics.js`,
+incluso in fondo alla pagina insieme a `js/main.js`.
+
+Sugli articoli è attivo anche l'evento `lettura_completa`, che scatta al 75%
+dell'altezza di `.article-body`: serve a capire se gli articoli vengono letti o
+abbandonati. Funziona da solo, non c'è niente da configurare per articolo.
 
 ---
 

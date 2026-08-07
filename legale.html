@@ -3,6 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Consent Mode v2 — default negato -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSMYGTDLV7"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-TSMYGTDLV7', {
+    'anonymize_ip': true
+  });
+</script>
 <!-- GATE DI ANTEPRIMA — riga temporanea, si toglie al go-live (vedi gate.js) -->
 <script src="/gate.js"></script>
 
@@ -140,8 +164,10 @@
   <div class="legal-body">
     <p><strong>Cosa sono i cookie.</strong> Sono piccoli file che i siti salvano sul tuo dispositivo per funzionare correttamente o per raccogliere informazioni sulla navigazione.</p>
     <p><strong>Cookie tecnici.</strong> Necessari al funzionamento del sito. Non richiedono consenso e non possono essere disattivati.</p>
-    <p><strong>Strumenti di terze parti.</strong> Questo sito può caricare risorse esterne che comportano il trattamento di dati tecnici: <strong>Google Fonts</strong> (font tipografici) e <strong>Formspree</strong> (invio del modulo "Vendi"). Se in futuro verranno attivati strumenti statistici o social (es. Google Analytics, pixel Instagram), saranno elencati qui e attivati solo previo consenso.</p>
-    <p><strong>Gestione del consenso.</strong> Puoi accettare o rifiutare gli strumenti non necessari tramite il banner. Puoi inoltre gestire o eliminare i cookie dalle impostazioni del tuo browser.</p>
+    <p><strong>Strumenti di terze parti.</strong> Questo sito carica risorse esterne che comportano il trattamento di dati tecnici: <strong>Google Fonts</strong> (font tipografici) e <strong>Formspree</strong> (invio del modulo "Vendi").</p>
+    <p><strong>Cookie statistici — Google Analytics 4.</strong> Uso Google Analytics 4 per capire quante persone visitano il sito, da dove arrivano e quali pagine leggono. <em>Finalità:</em> statistiche di utilizzo del sito. <em>Titolare del trattamento dei dati raccolti tramite lo strumento:</em> Google. <em>Base giuridica:</em> il tuo consenso. <em>Durata dei cookie:</em> [DA VERIFICARE nella documentazione Google]. <em>Trasferimento dei dati fuori dall'Unione Europea:</em> [DA VERIFICARE con un consulente].</p>
+    <p>Lo strumento è installato in modalità consenso preventivo: finché non accetti, non viene salvato nessun cookie statistico e non viene inviato nessun dato. Ho attivato l'anonimizzazione dell'indirizzo IP. Non trasmetto ad Analytics nessun dato che ti identifichi: quando invii il modulo "Vendi" registro solo che una richiesta è partita, mai il tuo nome, il tuo numero, la tua email o il testo del messaggio.</p>
+    <p><strong>Gestione e revoca del consenso.</strong> Puoi accettare o rifiutare gli strumenti non necessari tramite il banner. Puoi cambiare idea in qualsiasi momento: in fondo a ogni pagina trovi il comando <strong>"Gestisci cookie"</strong>, che cancella la scelta memorizzata, rimette le statistiche su "negato" ed elimina i cookie già presenti sul tuo dispositivo. Puoi inoltre gestire o eliminare i cookie dalle impostazioni del tuo browser.</p>
   </div>
 </section>
 
@@ -212,5 +238,6 @@
 <button class="to-top" id="toTop" aria-label="Torna su">↑</button>
 
 <script src="js/main.js" defer></script>
+<script src="js/analytics.js" defer></script>
 </body>
 </html>

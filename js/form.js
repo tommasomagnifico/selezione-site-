@@ -122,6 +122,13 @@
 
     // e. schermata di conferma (con lo stesso link, se il popup è stato bloccato)
     mostraConferma(riferimento, urlWhatsApp);
+
+    // f. segnale per js/analytics.js, che lo traduce nell'evento generate_lead.
+    //    Sta qui e non su un listener di submit perché deve partire solo a
+    //    validazione superata. Non porta con sé nessun dato dell'utente.
+    document.dispatchEvent(new CustomEvent('selezione:lead', {
+      detail: { metodo: 'form_vendi' }
+    }));
   }
 
   var btnInvio = document.getElementById('sellSubmitBtn');

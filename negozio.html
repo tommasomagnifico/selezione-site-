@@ -3,6 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Consent Mode v2 — default negato -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'analytics_storage': 'denied',
+    'functionality_storage': 'granted',
+    'security_storage': 'granted',
+    'wait_for_update': 500
+  });
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSMYGTDLV7"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config', 'G-TSMYGTDLV7', {
+    'anonymize_ip': true
+  });
+</script>
 <!-- GATE DI ANTEPRIMA — riga temporanea, si toglie al go-live (vedi gate.js) -->
 <script src="/gate.js"></script>
 
@@ -207,5 +231,6 @@
 <button class="to-top" id="toTop" aria-label="Torna su">↑</button>
 
 <script src="js/main.js" defer></script>
+<script src="js/analytics.js" defer></script>
 </body>
 </html>

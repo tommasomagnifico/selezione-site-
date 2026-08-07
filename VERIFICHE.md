@@ -322,25 +322,24 @@ filtri di categoria del blog, i due bottoni del banner cookie.
 
 **Verifica che funzionino** cliccandoli: nessuno deve dare 404.
 
-### 6.2 La CTA porta a Vendi con l'UTM giusto
+### 6.2 La CTA porta a Vendi, senza UTM
 
 **Strumento.** Browser. Apri un articolo, scorri fino in fondo, clicca
 "Richiedi una valutazione".
 
-**Atteso.** La barra degli indirizzi mostra:
+**Atteso.** La barra degli indirizzi mostra `/vendi.html` **pulito**, senza
+`?utm_...`. Accanto al bottone principale ci deve essere "Scrivimi su WhatsApp"
+che apre `wa.me/393315453138`.
 
-    /vendi.html?utm_source=blog&utm_medium=cta&utm_campaign=<slug-dell-articolo>
+**Perché gli UTM non ci sono più.** Li avevo messi nella tornata precedente,
+poi sono stati rimossi con l'installazione di Analytics: su GA4 un parametro
+`utm_` in un link **interno** chiude la sessione in corso e ne apre una nuova,
+sovrascrivendo la sorgente di traffico. Chi arriva da una ricerca Google e poi
+clicca la CTA verrebbe attribuito al blog, e si perderebbe il dato che serve
+davvero. Al loro posto c'è l'evento `cta_valutazione`, che registra articolo e
+posizione del click senza toccare la sessione.
 
-con lo slug dell'articolo da cui sei partito, non un altro. Accanto al bottone
-principale ci deve essere "Scrivimi su WhatsApp" che apre
-`wa.me/393315453138`.
-
-**Se `utm_campaign` è uguale su tutti gli articoli**, non potrai distinguere
-quale guida porta più richieste: è il motivo per cui il parametro esiste.
-
-**Nota.** In Google Analytics le richieste arrivate dal blog compariranno con
-sorgente `blog` e mezzo `cta`. Se non usi Analytics, gli UTM non fanno danno:
-restano nell'URL e basta.
+**Se vedi ancora un `utm_` in un link interno**, va tolto.
 
 ### 6.3 Il flusso è bidirezionale
 

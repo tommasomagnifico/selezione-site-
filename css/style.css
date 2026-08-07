@@ -493,6 +493,13 @@ nav.scrolled { box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding-top: 1.1rem; pad
 .field input[type=file]::file-selector-button:hover { background: var(--cobalt); }
 .field-hint { font-size: 0.68rem; color: var(--muted); margin-top: 0.45rem; line-height: 1.5; }
 
+/* Honeypot: fuori schermo invece che display:none, perché una parte dei bot
+   salta i campi dichiarati nascosti e l'esca non scatterebbe. */
+.hp-field {
+  position: absolute; left: -9999px; top: auto;
+  width: 1px; height: 1px; overflow: hidden;
+}
+
 .form-check { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 1.4rem; }
 .form-check input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--cobalt); flex-shrink: 0; cursor: pointer; }
 .form-check label { font-size: 0.76rem; color: var(--muted2); line-height: 1.5; cursor: pointer; }

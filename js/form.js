@@ -4,7 +4,7 @@
   var FORM_ENDPOINT = "https://formspree.io/f/INSERISCI_ID";
 
   var WHATSAPP_NUMERO = "393315453138";
-  var EMAIL_FALLBACK = "info@selezioneshop.it";
+  var EMAIL_FALLBACK = "selezioneresellshop@gmail.com";
 
   /* Codice di riferimento SS-XXXX: serve a ricollegare la conversazione
      WhatsApp al record salvato sul backend. */
@@ -92,6 +92,12 @@
   function inviaRichiesta(e) {
     if (e) e.preventDefault();
     nascondiErrore();
+
+    /* Honeypot: il campo #sito è fuori schermo e fuori dall'ordine di
+       tabulazione, quindi solo un bot lo compila. Si esce senza messaggi né
+       segnali: chi invia non deve capire perché non è passato. */
+    var esca = document.getElementById('sito');
+    if (esca && esca.value) return;
 
     if (!val('nome') || !val('cellulare') || !val('tipo') || !val('dettagli')) {
       mostraErrore('Compila nome, cellulare, tipo di articolo e descrizione.');

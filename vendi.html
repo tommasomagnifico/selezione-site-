@@ -194,7 +194,9 @@
       <!-- LOGISTICA -->
       <div class="sell-logistics">
         <h2>Spedizione in tutta Italia o ritiro a Roma</h2>
-        <!-- COPY DA INSERIRE -->
+        <p>Non serve che tu sia a Roma: quasi tutte le trattative si chiudono a distanza. Mi mandi le foto, concordiamo il prezzo, poi spedisci con corriere tracciato. Le spese di spedizione rientrano nell'accordo e le mettiamo per iscritto insieme al prezzo, prima che tu spedisca qualsiasi cosa: sai in partenza quanto ti resta in mano.</p>
+        <p>Se invece hai console usate da vendere a Roma o nell'hinterland, il ritiro di persona è la strada più veloce: ci diamo appuntamento, controlliamo il pezzo insieme e si chiude in giornata, senza imballi né attese del corriere. È anche l'unico modo sensato per lotti e collezioni ingombranti, dove la spedizione costerebbe più di quanto conviene a entrambi.</p>
+        <p>Il pagamento parte quando il pezzo è arrivato e corrisponde a quello che ci siamo detti, con un metodo tracciabile concordato prima. Se paghiamo in contanti al ritiro compilo un modulo di vendita, cartaceo o digitale: resta a entrambi come prova della transazione.</p>
       </div>
 
       <!-- GUIDE UTILI -->
@@ -292,6 +294,17 @@
             <p class="field-hint">Puoi allegarle qui, oppure mandarmele direttamente su WhatsApp dopo l'invio.</p>
           </div>
         </div>
+        <!-- ANTI-SPAM (honeypot). Campo fuori schermo che un umano non vede e
+             non può raggiungere col tab: se arriva compilato è un bot e l'invio
+             viene scartato in silenzio (js/form.js). Il nome _gotcha è quello
+             che Formspree scarta già da solo lato server; su WordPress resta un
+             campo di testo qualsiasi, quindi la protezione regge anche dopo la
+             migrazione, sia via plugin sia col controllo JS. -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="sito">Lascia vuoto questo campo</label>
+          <input type="text" id="sito" name="_gotcha" tabindex="-1" autocomplete="off">
+        </div>
+
         <div class="form-check">
           <input type="checkbox" id="privacy">
           <label for="privacy">Ho letto e accetto l'<a href="legale.html#privacy" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei miei dati per gestire la richiesta.</label>
@@ -303,7 +316,7 @@
         <button class="form-submit" id="sellSubmitBtn">Continua su WhatsApp</button>
         <p class="form-error" id="sellError"></p>
         <p class="form-note">Si apre WhatsApp con il messaggio già pronto: ti basta premere invia e allegare le foto.</p>
-        <p class="form-alt"><a href="mailto:info@selezioneshop.it?subject=Richiesta%20di%20valutazione">Preferisco scrivere via email</a></p>
+        <p class="form-alt"><a href="mailto:selezioneresellshop@gmail.com?subject=Richiesta%20di%20valutazione">Preferisco scrivere via email</a></p>
       </div>
 
       <div class="form-success" id="sellSuccess">
@@ -313,7 +326,7 @@
         <h3>Ti ho aperto WhatsApp.</h3>
         <p class="form-ref-label">Il tuo riferimento</p>
         <p class="form-ref" id="sellRef"></p>
-        <p>Se non si è aperto, <a href="https://wa.me/393315453138" target="_blank" rel="noopener" id="sellWaLink">scrivimi qui</a> oppure manda una mail a <a href="mailto:info@selezioneshop.it" id="sellMailLink">info@selezioneshop.it</a> indicando il riferimento <strong id="sellRefInline"></strong>.</p>
+        <p>Se non si è aperto, <a href="https://wa.me/393315453138" target="_blank" rel="noopener" id="sellWaLink">scrivimi qui</a> oppure manda una mail a <a href="mailto:selezioneresellshop@gmail.com" id="sellMailLink">selezioneresellshop@gmail.com</a> indicando il riferimento <strong id="sellRefInline"></strong>.</p>
         <p>Ricordati di allegare le foto: senza quelle non riesco a fare una valutazione.</p>
       </div>
     </div>

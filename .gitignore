@@ -19,3 +19,10 @@ desktop.ini
 *.bak
 
 correzioni.txt
+
+# Note di lavoro interne: restano in locale. Su GitHub Pages qualsiasi file
+# committato è scaricabile (selezioneshop.it/CHANGELOG.md), e questi contengono
+# punti aperti, decisioni interne e il codice del gate di anteprima in chiaro.
+CHANGELOG.md
+VERIFICHE.md
+FASE-0-DIAGNOSI.md

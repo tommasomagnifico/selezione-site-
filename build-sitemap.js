@@ -1,24 +1,31 @@
 /* Rigenera sitemap.xml leggendo le pagine HTML del sito.
  *
- * Uso:  node tools/genera-sitemap.mjs
+ *   node build-sitemap.js
  *
- * Non serve installare nulla: usa solo i moduli di Node. Va lanciato dopo
- * aver aggiunto un articolo al blog (o una pagina qualsiasi), così la sitemap
- * resta allineata senza doverla modificare a mano.
+ * Nessuna dipendenza: usa solo i moduli di Node. Va lanciato dopo ogni nuovo
+ * articolo, così la sitemap resta allineata senza doverla scrivere a mano.
+ * La procedura completa è in blog/_template/README.md.
  *
- * Come decide cosa includere:
- * - prende ogni file .html della root e ogni blog/<slug>/index.html;
- * - salta le pagine con <meta name="robots" content="noindex"> (es. 404.html);
- * - l'URL è quello del <link rel="canonical">: se manca, la pagina viene
- *   segnalata e saltata, perché senza canonical non è pubblicabile;
- * - <lastmod> è il "dateModified" del JSON-LD, se c'è, altrimenti la data di
+ * Cosa include e cosa no:
+ * - prende ogni .html della root e ogni blog/<slug>/index.html;
+ * - salta la cartella blog/_template/ (è un modello, non una pagina);
+ * - salta le pagine con <meta name="robots" content="...noindex..."> —
+ *   quindi 404.html, preview-access.html ed eventuali pagine paginate o
+ *   di categoria messe in noindex;
+ * - l'URL è quello del <link rel="canonical">: senza canonical la pagina
+ *   viene segnalata e saltata, perché non è pubblicabile;
+ * - <lastmod> è il "dateModified" del JSON-LD se c'è, altrimenti la data di
  *   ultima modifica del file.
  */
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
-import { join, dirname, relative, sep } from 'node:path';
-import { fileURLToPath } from 'node:url';
+'use strict';
 
-const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
+const fs = require('node:fs');
+const path = require('node:path');
+
+const ROOT = __dirname;
+
+/* Cartelle mai scansionate. */
+const ESCLUSE = new Set(['node_modules', 'tools', '_template']);
 
 /* changefreq e priority per percorso; le pagine non elencate (gli articoli
    del blog) usano DEFAULT. */
@@ -33,27 +40,23 @@ const REGOLE = {
 };
 const DEFAULT = { changefreq: 'monthly', priority: '0.6' };
 
-function paginaHtml(dir) {
+function pagineHtml(dir) {
   const trovate = [];
-  for (const voce of readdirSync(dir, { withFileTypes: true })) {
-    if (voce.name.startsWith('.') || voce.name === 'node_modules' || voce.name === 'tools') continue;
-    const percorso = join(dir, voce.name);
-    if (voce.isDirectory()) trovate.push(...paginaHtml(percorso));
+  for (const voce of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (voce.name.startsWith('.') || ESCLUSE.has(voce.name)) continue;
+    const percorso = path.join(dir, voce.name);
+    if (voce.isDirectory()) trovate.push(...pagineHtml(percorso));
     else if (voce.name.endsWith('.html')) trovate.push(percorso);
   }
   return trovate;
 }
 
-function dataFile(percorso) {
-  return statSync(percorso).mtime.toISOString().slice(0, 10);
-}
-
 const voci = [];
 const saltate = [];
 
-for (const percorso of paginaHtml(ROOT)) {
-  const html = readFileSync(percorso, 'utf8');
-  const relativo = relative(ROOT, percorso).split(sep).join('/');
+for (const percorso of pagineHtml(ROOT)) {
+  const html = fs.readFileSync(percorso, 'utf8');
+  const relativo = path.relative(ROOT, percorso).split(path.sep).join('/');
 
   if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
     saltate.push(`${relativo} (noindex)`);
@@ -73,8 +76,9 @@ for (const percorso of paginaHtml(ROOT)) {
 
   voci.push({
     loc,
-    lastmod: modificato ? modificato[1] : dataFile(percorso),
-    ...regola
+    lastmod: modificato ? modificato[1] : fs.statSync(percorso).mtime.toISOString().slice(0, 10),
+    changefreq: regola.changefreq,
+    priority: regola.priority
   });
 }
 
@@ -95,7 +99,7 @@ const xml = [
   ''
 ].join('\n');
 
-writeFileSync(join(ROOT, 'sitemap.xml'), xml);
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), xml);
 
 console.log(`sitemap.xml rigenerata: ${voci.length} URL`);
 for (const v of voci) console.log(`  ${v.loc}  (${v.lastmod})`);

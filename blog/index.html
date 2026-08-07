@@ -6,17 +6,18 @@
 <!-- GATE DI ANTEPRIMA — riga temporanea, si toglie al go-live (vedi gate.js) -->
 <script src="/gate.js"></script>
 
-<!-- Prestazioni: preconnessione ai server dei font -->
+<!-- Prestazioni: preconnessione e preload del foglio dei font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=optional">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=optional" rel="stylesheet">
 
-<title>Blog — guide su console, videogiochi e collezionismo | Selezione.</title>
+<title>Blog — console, videogiochi e collezionismo | Selezione.</title>
 
 <!-- SEO -->
-<meta name="description" content="Guide pratiche per vendere console e videogiochi usati, capire il valore dei prodotti Pokémon sealed e riconoscere i pezzi che vale la pena tenere. Scritte da chi compra ogni giorno.">
+<meta name="description" content="Guide pratiche su console e videogiochi usati, prodotti Pokémon sealed e collezionismo. Scritte da chi compra e rivende ogni giorno.">
 <link rel="canonical" href="https://selezioneshop.it/blog/">
 <link rel="alternate" hreflang="it-it" href="https://selezioneshop.it/blog/">
 <link rel="alternate" hreflang="x-default" href="https://selezioneshop.it/blog/">
@@ -33,8 +34,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Selezione.">
 <meta property="og:locale" content="it_IT">
-<meta property="og:title" content="Blog — guide su console, videogiochi e collezionismo | Selezione.">
-<meta property="og:description" content="Guide pratiche per vendere console e videogiochi usati, capire il valore dei prodotti Pokémon sealed e riconoscere i pezzi che vale la pena tenere.">
+<meta property="og:title" content="Blog — console, videogiochi e collezionismo | Selezione.">
+<meta property="og:description" content="Guide pratiche su console e videogiochi usati, prodotti Pokémon sealed e collezionismo. Scritte da chi compra e rivende ogni giorno.">
 <meta property="og:url" content="https://selezioneshop.it/blog/">
 <!-- Sostituisci con l'URL di una tua immagine 1200x630 quando il sito è online -->
 <meta property="og:image" content="https://selezioneshop.it/og-image.jpg">
@@ -44,8 +45,8 @@
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Blog — guide su console, videogiochi e collezionismo | Selezione.">
-<meta name="twitter:description" content="Guide pratiche per vendere console e videogiochi usati, capire il valore dei prodotti Pokémon sealed e riconoscere i pezzi che vale la pena tenere.">
+<meta name="twitter:title" content="Blog — console, videogiochi e collezionismo | Selezione.">
+<meta name="twitter:description" content="Guide pratiche su console e videogiochi usati, prodotti Pokémon sealed e collezionismo. Scritte da chi compra e rivende ogni giorno.">
 <meta name="twitter:image" content="https://selezioneshop.it/og-image.jpg">
 
 <!-- Favicon (il punto del brand) -->
@@ -85,7 +86,7 @@
       "@id": "https://selezioneshop.it/blog/#blog",
       "url": "https://selezioneshop.it/blog/",
       "name": "Blog — Selezione.",
-      "description": "Guide pratiche per vendere console e videogiochi usati, capire il valore dei prodotti Pokémon sealed e riconoscere i pezzi che vale la pena tenere.",
+      "description": "Guide pratiche su console e videogiochi usati, prodotti Pokémon sealed e collezionismo. Scritte da chi compra e rivende ogni giorno.",
       "inLanguage": "it-IT",
       "publisher": { "@id": "https://selezioneshop.it/#organization" },
       "blogPost": [
@@ -213,8 +214,6 @@
     </a>
   </div>
 
-  <p class="blog-empty" id="blogEmpty">Nessun articolo in questa categoria, per ora.</p>
-
   <div class="blog-loadmore" id="blogLoadMoreWrap">
     <button type="button" class="btn-secondary" id="blogLoadMore">Carica altri articoli</button>
   </div>
@@ -225,7 +224,8 @@
   <h2>Hai un pezzo e non sai <em>quanto vale?</em></h2>
   <p>Le guide servono a farsi un'idea. Per un numero vero servono due foto: <a href="/vendi.html">richiedi una valutazione</a> e ti rispondo in 24/48h.</p>
   <div class="hero-actions">
-    <a href="/vendi.html" class="btn-main">Richiedi una valutazione →</a>
+    <a href="/vendi.html?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign=blog-index" class="btn-main">Richiedi una valutazione →</a>
+    <a href="https://wa.me/393315453138" target="_blank" rel="noopener" class="btn-secondary">Scrivimi su WhatsApp</a>
   </div>
 </section>
 </main>

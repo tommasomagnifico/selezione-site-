@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- GATE DI ANTEPRIMA — riga temporanea, si toglie al go-live (vedi gate.js) -->
+<script src="/gate.js"></script>
+
+<!-- Prestazioni: preconnessione e preload del foglio dei font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=optional">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=optional" rel="stylesheet">
+
+<title>{{TITLE}} | Selezione.</title>
+
+<!-- SEO — {{TITLE}} max 60 caratteri, {{DESCRIPTION}} max 155 -->
+<meta name="description" content="{{DESCRIPTION}}">
+<link rel="canonical" href="{{CANONICAL}}">
+<link rel="alternate" hreflang="it-it" href="{{CANONICAL}}">
+<link rel="alternate" hreflang="x-default" href="{{CANONICAL}}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow">
+<meta name="author" content="Tommaso Magnifico">
+<meta name="theme-color" content="#000000">
+
+<!-- Local SEO (Roma) -->
+<meta name="geo.region" content="IT-RM">
+<meta name="geo.placename" content="Roma">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Selezione.">
+<meta property="og:locale" content="it_IT">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:url" content="{{CANONICAL}}">
+<!-- {{OG_IMAGE}}: 1200x630 in JPG o WebP. Finché non esiste l'immagine
+     dell'articolo, lasciare il fallback https://selezioneshop.it/og-image.jpg -->
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:image:alt" content="{{TITLE}} — Selezione.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="{{DATE_PUBLISHED}}">
+<meta property="article:modified_time" content="{{DATE_MODIFIED}}">
+<meta property="article:author" content="Tommaso Magnifico">
+<meta property="article:section" content="{{CATEGORY}}">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{DESCRIPTION}}">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+
+<!-- Favicon (il punto del brand) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23000000'/%3E%3Ccircle cx='16' cy='22' r='4' fill='%232E5BFF'/%3E%3C/svg%3E">
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- Dati strutturati schema.org.
+     Il nodo FAQPage va aggiunto SOLO se l'articolo ha davvero la sezione
+     "Domande frequenti" in pagina, con le stesse identiche domande. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://selezioneshop.it/#organization",
+      "name": "Selezione.",
+      "url": "https://selezioneshop.it/",
+      "email": "selezioneresellshop@gmail.com",
+      "telephone": "+39 331 545 3138",
+      "vatID": "IT18554041006",
+      "slogan": "Chiacchiere, tempo e pezzi rari.",
+      "sameAs": [
+        "https://instagram.com/selezione.shop",
+        "https://www.ebay.it/str/selezioneshop",
+        "https://www.vinted.it/member/70497170"
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://selezioneshop.it/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://selezioneshop.it/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "{{TITLE}}", "item": "{{CANONICAL}}" }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "{{CANONICAL}}#article",
+      "headline": "{{TITLE}}",
+      "description": "{{DESCRIPTION}}",
+      "url": "{{CANONICAL}}",
+      "mainEntityOfPage": "{{CANONICAL}}",
+      "datePublished": "{{DATE_PUBLISHED}}",
+      "dateModified": "{{DATE_MODIFIED}}",
+      "inLanguage": "it-IT",
+      "articleSection": "{{CATEGORY}}",
+      "image": "{{OG_IMAGE}}",
+      "author": {
+        "@type": "Person",
+        "name": "Tommaso Magnifico",
+        "url": "https://selezioneshop.it/chi-siamo.html"
+      },
+      "publisher": { "@id": "https://selezioneshop.it/#organization" },
+      "isPartOf": { "@id": "https://selezioneshop.it/blog/#blog" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="logo">selezione<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/vendi.html">Vendi</a></li>
+    <li><a href="/negozio.html">Negozio</a></li>
+    <li><a href="/blog/" aria-current="page">Blog</a></li>
+    <li><a href="/chi-siamo.html">Chi sono</a></li>
+    <li><a href="/faq.html">FAQ</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Apri menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Home</a>
+  <a href="/vendi.html">Vendi</a>
+  <a href="/negozio.html">Negozio</a>
+  <a href="/blog/" aria-current="page">Blog</a>
+  <a href="/chi-siamo.html">Chi sono</a>
+  <a href="/faq.html">FAQ</a>
+</div>
+
+<main>
+<!-- BREADCRUMB — Home > Blog > titolo dell'articolo -->
+<nav class="breadcrumb" aria-label="Percorso di navigazione">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><span aria-current="page">{{TITLE}}</span></li>
+  </ol>
+</nav>
+
+<!-- TESTATA -->
+<header class="article-hero">
+  <h1>{{H1}}</h1>
+  <!-- RISPOSTA DIRETTA: 45-55 parole. È il paragrafo che Google può prendere
+       come featured snippet, quindi deve rispondere alla domanda del titolo
+       subito, senza preamboli. -->
+  <p class="article-standfirst">{{RISPOSTA_DIRETTA}}</p>
+  <p class="article-byline">
+    <span class="author">Tommaso Magnifico</span>
+    <span class="dot" aria-hidden="true"></span>
+    <time datetime="{{DATE_PUBLISHED}}">{{DATA_LEGGIBILE}}</time>
+    <span class="dot" aria-hidden="true"></span>
+    <span>{{CATEGORY}}</span>
+    <span class="dot" aria-hidden="true"></span>
+    <span>{{MINUTI}} minuti di lettura</span>
+  </p>
+</header>
+
+<figure class="article-cover">
+  <img src="/img/blog/{{SLUG}}.svg" alt="{{ALT_COPERTINA}}" width="1200" height="630" loading="eager" decoding="async">
+</figure>
+
+<!-- CORPO — struttura standard.
+     Un solo H1 (sopra). Da qui in giù si parte da H2 e non si saltano livelli:
+     un H3 può stare solo dentro un H2. -->
+<article class="article-body">
+  <h2>{{H2_SEZIONE_1}}</h2>
+  <p>{{TESTO}}</p>
+
+  <h3>{{H3_SOTTOSEZIONE}}</h3>
+  <p>{{TESTO}}</p>
+
+  <h2>{{H2_SEZIONE_2}}</h2>
+  <p>{{TESTO}}</p>
+
+  <!-- SEZIONE FAQ — facoltativa.
+       Se la tieni, aggiungi il nodo FAQPage al JSON-LD nell'head con le stesse
+       identiche domande. Se la togli, togli anche quel nodo: schema che non
+       corrisponde a contenuto visibile è una violazione delle linee guida. -->
+  <h2>Domande frequenti</h2>
+
+  <h3>{{DOMANDA_1}}</h3>
+  <p>{{RISPOSTA_1}}</p>
+
+  <h3>{{DOMANDA_2}}</h3>
+  <p>{{RISPOSTA_2}}</p>
+
+  <!-- Chiusura: almeno un link a /vendi.html con anchor descrittiva
+       (mai "clicca qui") e un link a un articolo fratello. -->
+  <h2>{{H2_CHIUSURA}}</h2>
+  <p>{{TESTO_CON_LINK_INTERNI}}</p>
+</article>
+
+<!-- ARTICOLI CORRELATI — 2 o 3 card verso altri articoli, meglio se della
+     stessa categoria. I link devono restare <a href> reali nell'HTML. -->
+<section class="related" aria-label="Articoli correlati">
+  <h2>Continua a leggere.</h2>
+  <div class="blog-grid">
+    <a href="/blog/{{SLUG_CORRELATO_1}}/" class="post-card reveal">
+      <div class="post-tile">
+        <img class="post-cover" src="/img/blog/{{SLUG_CORRELATO_1}}.svg" alt="{{ALT_CORRELATO_1}}" width="1200" height="630" loading="lazy" decoding="async">
+      </div>
+      <div class="post-info">
+        <p class="post-meta">
+          <span>{{CATEGORIA_CORRELATO_1}}</span>
+          <span class="post-meta-dot" aria-hidden="true"></span>
+          <time datetime="{{DATA_CORRELATO_1}}">{{DATA_LEGGIBILE_CORRELATO_1}}</time>
+        </p>
+        <h3>{{TITOLO_CORRELATO_1}}</h3>
+        <p class="post-excerpt">{{EXCERPT_CORRELATO_1}}</p>
+        <span class="post-more">Leggi l'articolo →</span>
+      </div>
+    </a>
+    <a href="/blog/{{SLUG_CORRELATO_2}}/" class="post-card reveal">
+      <div class="post-tile">
+        <img class="post-cover" src="/img/blog/{{SLUG_CORRELATO_2}}.svg" alt="{{ALT_CORRELATO_2}}" width="1200" height="630" loading="lazy" decoding="async">
+      </div>
+      <div class="post-info">
+        <p class="post-meta">
+          <span>{{CATEGORIA_CORRELATO_2}}</span>
+          <span class="post-meta-dot" aria-hidden="true"></span>
+          <time datetime="{{DATA_CORRELATO_2}}">{{DATA_LEGGIBILE_CORRELATO_2}}</time>
+        </p>
+        <h3>{{TITOLO_CORRELATO_2}}</h3>
+        <p class="post-excerpt">{{EXCERPT_CORRELATO_2}}</p>
+        <span class="post-more">Leggi l'articolo →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CTA — bottone primario verso la pagina Vendi con UTM per articolo,
+     secondario verso WhatsApp. {{SLUG}} va sostituito con lo slug reale. -->
+<section class="cta-band reveal">
+  <h2>{{CTA_TITOLO}}</h2>
+  <p>{{CTA_TESTO}}</p>
+  <div class="hero-actions">
+    <a href="/vendi.html?utm_source=blog&amp;utm_medium=cta&amp;utm_campaign={{SLUG}}" class="btn-main">Richiedi una valutazione →</a>
+    <a href="https://wa.me/393315453138" target="_blank" rel="noopener" class="btn-secondary">Scrivimi su WhatsApp</a>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="footer-logo">selezione<span>.</span></div>
+      <p class="footer-tag">Chiacchiere, tempo e pezzi rari.</p>
+    </div>
+    <div class="footer-contacts">
+      <a href="mailto:selezioneresellshop@gmail.com">selezioneresellshop@gmail.com</a>
+      <a href="https://wa.me/393315453138" target="_blank" rel="noopener">WhatsApp · 331 545 3138</a>
+      <a href="https://instagram.com/selezione.shop" target="_blank" rel="noopener">Instagram · @selezione.shop</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Selezione. — P.IVA 18554041006 · REA RM-1792120 · <a href="/legale.html#privacy">Privacy</a> · <a href="/legale.html#cookie">Cookie</a> · <a href="/legale.html#note-legali">Note legali</a> · <a href="/legale.html#termini">Termini</a></p>
+    <nav class="footer-nav">
+      <a href="/">Home</a>
+      <a href="/vendi.html">Vendi</a>
+      <a href="/negozio.html">Negozio</a>
+      <a href="/blog/">Blog</a>
+      <a href="/chi-siamo.html">Chi sono</a>
+      <a href="/faq.html">FAQ</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>Uso cookie tecnici necessari al funzionamento del sito e, previo consenso, strumenti di terze parti (font e modulo di contatto). <a href="/legale.html#cookie">Cookie policy</a></p>
+  <div class="cookie-actions">
+    <button class="cookie-btn ghost">Rifiuta</button>
+    <button class="cookie-btn solid">Accetta</button>
+  </div>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="to-top" id="toTop" aria-label="Torna su">↑</button>
+
+<script src="/js/main.js" defer></script>
+</body>
+</html>

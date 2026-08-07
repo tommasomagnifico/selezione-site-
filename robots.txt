@@ -7,4 +7,7 @@ Allow: /css/
 Allow: /js/
 Allow: /img/
 
+# Modello da duplicare per i nuovi articoli, non una pagina del sito.
+Disallow: /blog/_template/
+
 Sitemap: https://selezioneshop.it/sitemap.xml

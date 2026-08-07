@@ -13,4 +13,9 @@ desktop.ini
 # Log
 *.log
 
+# Backup creati prima delle modifiche distruttive (regola 5 di correzioni.txt).
+# Restano in locale: su un repo git la cronologia è già il backup vero, e file
+# .bak pubblicati verrebbero serviti da GitHub Pages.
+*.bak
+
 correzioni.txt

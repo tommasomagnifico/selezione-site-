@@ -51,6 +51,32 @@ function pagineHtml(dir) {
   return trovate;
 }
 
+/* Il "dateModified" della pagina, non il primo che capita nel file.
+   Serve la distinzione: l'indice del blog elenca nel suo JSON-LD anche i
+   dateModified dei singoli articoli, e una ricerca per espressione regolare
+   pescherebbe la data del primo articolo invece di quella dell'indice.
+   Si prende quindi solo dal nodo che descrive QUESTA pagina, cioè quello il
+   cui mainEntityOfPage (o url, o @id) coincide col canonical. */
+function dataModifica(html, canonical) {
+  for (const blocco of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    let dati;
+    try {
+      dati = JSON.parse(blocco[1]);
+    } catch (e) {
+      continue; // JSON-LD malformato: lo salta invece di far fallire tutto
+    }
+    const nodi = [].concat(dati['@graph'] || dati);
+    for (const nodo of nodi) {
+      if (!nodo || typeof nodo !== 'object' || !nodo.dateModified) continue;
+      const riferimenti = [nodo.mainEntityOfPage, nodo.url, nodo['@id']];
+      if (riferimenti.some((r) => typeof r === 'string' && r.split('#')[0] === canonical)) {
+        return String(nodo.dateModified).slice(0, 10);
+      }
+    }
+  }
+  return null;
+}
+
 const voci = [];
 const saltate = [];
 
@@ -71,12 +97,11 @@ for (const percorso of pagineHtml(ROOT)) {
 
   const loc = canonical[1];
   const percorsoUrl = new URL(loc).pathname;
-  const modificato = html.match(/"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})"/);
   const regola = REGOLE[percorsoUrl] || DEFAULT;
 
   voci.push({
     loc,
-    lastmod: modificato ? modificato[1] : fs.statSync(percorso).mtime.toISOString().slice(0, 10),
+    lastmod: dataModifica(html, loc) || fs.statSync(percorso).mtime.toISOString().slice(0, 10),
     changefreq: regola.changefreq,
     priority: regola.priority
   });

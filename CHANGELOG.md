@@ -12,7 +12,7 @@ La diagnosi che ha guidato tutto è in [FASE-0-DIAGNOSI.md](FASE-0-DIAGNOSI.md).
 | `FASE-0-DIAGNOSI.md` | Report della Fase 0: stato, problemi e gravità voce per voce, con i numeri misurati sul codice |
 | `blog/_template/article.html` | Modello da duplicare a ogni nuovo articolo. Head completo con placeholder `{{...}}`, header e footer identici al resto del sito, breadcrumb, struttura del corpo commentata, blocco CTA con UTM, blocco correlati, JSON-LD completo |
 | `blog/_template/README.md` | Procedura di pubblicazione in 8 passi, tabella dei placeholder con i vincoli di lunghezza, regole su categorie, paginazione e retrofit |
-| `build-sitemap.js` | Rigenera `sitemap.xml` con `node build-sitemap.js`. Zero dipendenze. Sostituisce `tools/genera-sitemap.mjs` |
+| `build-sitemap.js` | Rigenera `sitemap.xml` con `node build-sitemap.js`. Zero dipendenze. Sostituisce `tools/genera-sitemap.mjs`. Il `lastmod` viene dal `dateModified` del nodo JSON-LD che descrive **quella** pagina — riconosciuto confrontando `mainEntityOfPage`/`url`/`@id` col canonical — e non dalla prima data che compare nel file: l'indice del blog elenca nel suo JSON-LD anche le date dei singoli articoli, e una ricerca per espressione regolare gli avrebbe assegnato la data del primo articolo. Se il nodo non esiste, si usa la data di modifica del file |
 | `find-retrofit.js` | Elenca i commenti `<!-- RETROFIT: ... -->` con file e riga, per sapere ogni settimana quali link mancano |
 | `CHANGELOG.md` | Questo file |
 

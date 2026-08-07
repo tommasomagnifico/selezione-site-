@@ -1,10 +1,79 @@
 # Fase 0 — Diagnosi del blog
 
-Report richiesto da `correzioni.txt`. **Nessuna modifica al codice**: la Fase 0
-dice di fermarsi qui e aspettare il tuo ok.
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ VERDETTO BLOCCANTE                                              │
+├─────────────────────────────────────────────────────────────────┤
+│ "Carica altri articoli":                                        │
+│   [ ] URL reali (/blog/page/2/)                                 │
+│   [X] Solo JavaScript, nessun URL                               │
+│   [ ] Altro: ___________                                        │
+│                                                                 │
+│ Articoli presenti nell'HTML statico di                          │
+│ /blog/ prima dell'esecuzione JS:  3  su 3  (100%)               │
+│                                                                 │
+│ CONSEGUENZA: nessuna perdita di indicizzazione.                 │
+│ Il bottone non genera URL, ma non ne ha bisogno: tutti i        │
+│ link degli articoli sono <a href> reali nell'HTML statico.      │
+│ Il JavaScript NASCONDE elementi già presenti nel DOM, non ne    │
+│ INSERISCE. Googlebot li raggiunge tutti da /blog/ senza         │
+│ eseguire una riga di script.                                    │
+│                                                                 │
+│ Lo scenario che temi — "dalla quinta settimana metà dei         │
+│ contenuti invisibile a Googlebot" — NON si verifica.            │
+│ Si verificherebbe solo se le card oltre la prima pagina         │
+│ venissero create da JS: qui non succede.                        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**La paginazione NON è a URL reali.** Il punto 1.1 della Fase 1 quindi non si
+salta del tutto, ma ricade nell'alternativa che il punto 1.1 stesso dichiara
+accettabile: "mantieni tutti i link degli articoli presenti nell'HTML statico di
+`/blog/` e usa il JS solo per nascondere/mostrare visivamente". Il vincolo che
+quella alternativa impone — "NON usare `display:none` via JS su elementi assenti
+dal DOM iniziale" — è **già rispettato**.
+
+Come l'ho verificato: conteggio dei `<a href="/blog/...">` con classe `post-card`
+nel sorgente di `blog/index.html` (3), e ispezione di `js/blog.js`, che non
+contiene né `history.` né assegnazioni a `location`, e agisce solo con
+`style.display` su nodi ottenuti da `querySelectorAll` sul DOM esistente.
+
+---
+
+**Stato di esecuzione.** Questo report è la fotografia del codice al commit
+`5c7a43d`, prima di qualsiasi modifica. Le Fasi 1→6 sono state poi eseguite
+sotto l'istruzione precedente, in blocco, nei commit `a8d6a83` e `05dbbcf`:
+il registro è in [CHANGELOG.md](CHANGELOG.md), le checklist di verifica per
+fase e le procedure di ripristino in [VERIFICHE.md](VERIFICHE.md).
 
 Dati misurati sul codice, non stimati, salvo dove scritto esplicitamente.
-Data della rilevazione: 2026-08-07 · commit `5c7a43d`.
+Data della rilevazione: 2026-08-07.
+
+---
+
+## Dato mancante risolto: l'autore
+
+`author` è valorizzato con **Tommaso Magnifico** e `url` verso
+`https://selezioneshop.it/chi-siamo.html` nel template e in tutti e 3 gli
+articoli. Verificato con parse del JSON-LD, non con una ricerca testuale.
+
+**Ma `chi-siamo.html` non contiene il nome "Tommaso Magnifico" da nessuna
+parte.** La pagina parla del brand in prima persona ("Selezione. nasce a Roma
+dalla passione per…") senza mai dire chi è la persona che scrive. Nel sito il
+nome compare solo in `legale.html` ("Selezione. di Tommaso Magnifico — impresa
+individuale") e nelle byline degli articoli.
+
+Come mi hai chiesto, **non l'ho aggiunto da solo**: è testo di presentazione e
+va scritto da te. Finché non c'è, il link `author.url` punta a una pagina che
+non nomina quella persona e il segnale di autorevolezza non regge — Google
+segue il link e non trova conferma di chi sia l'autore.
+
+Due strade quando vuoi: una riga in fondo all'hero di `chi-siamo.html` (del
+tipo "Mi chiamo Tommaso Magnifico e Selezione. è la mia attività"), oppure
+spostare `author.url` su `legale.html`, che il nome ce l'ha — ma è una pagina
+legale, non una pagina d'autore, quindi vale molto meno.
+
+**Gravità: importante.**
 
 ---
 
@@ -186,8 +255,28 @@ quello — stessa funzione, niente commenti sparsi nel sorgente. Va bene?
 
 ---
 
-## Cosa serve da te
+## Come sono andate a finire le sette domande
 
-Un ok sul report e le risposte alle sette domande. Poi procedo con le Fasi 1→6
-nell'ordine, con backup `.bak` prima di ogni modifica distruttiva come da regola 5,
-e chiudo con il `CHANGELOG.md` richiesto.
+Le Fasi 1→6 sono state poi eseguite senza attendere le risposte, sotto
+l'istruzione che imponeva di applicare tutto e committare. Ho quindi deciso io
+su tutti e sette i punti, e ogni scelta è motivata in
+[CHANGELOG.md](CHANGELOG.md) nella sezione "Scelte implementative dove
+esistevano alternative". In sintesi:
+
+| Domanda | Decisione presa |
+|---|---|
+| 1. Paginazione a URL reali? | No: tenuta l'alternativa già in essere, `PAGE_SIZE` a 9 |
+| 2. Risposta diretta e FAQ nei 3 articoli? | Non scritte: avrebbero richiesto di inventare contenuti. Restano da riempire |
+| 3. `Article` o `BlogPosting`? | `BlogPosting` (sottotipo di `Article`), con `@id` verso l'`Organization` |
+| 4. Rinominare lo script sitemap? | Sì: `build-sitemap.js` alla radice, com'era richiesto |
+| 5. Copertine in WebP? | No: sono SVG da 1,4 KB, il WebP sarebbe più pesante e meno nitido |
+| 6. Preload o self-hosting dei font? | `preload` del foglio di stile; il self-hosting resta da valutare |
+| 7. Commenti RETROFIT nel sorgente? | Convenzione e script creati, ma nessun commento lasciato: oggi non servirebbe a niente |
+
+Se una di queste decisioni non ti convince, in
+[VERIFICHE.md](VERIFICHE.md) c'è la procedura per annullarla — per singolo file
+o per intero.
+
+**Resta però un dato che non ho potuto risolvere da solo e che aspetta te:**
+`chi-siamo.html` non contiene il tuo nome, e il campo `author` di tutti gli
+articoli punta lì. Vedi la sezione in cima a questo report.

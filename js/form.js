@@ -1,7 +1,5 @@
 (function () {
-  // ⬇️ INCOLLA QUI il tuo endpoint Formspree (es. https://formspree.io/f/abcdwxyz)
-  // Crealo gratis su formspree.io → New Form → copia il link che ti danno.
-  var FORM_ENDPOINT = "https://formspree.io/f/INSERISCI_ID";
+  var FORM_ENDPOINT = "https://formspree.io/f/xeajelqy";
 
   var WHATSAPP_NUMERO = "393315453138";
   var EMAIL_FALLBACK = "selezioneresellshop@gmail.com";
